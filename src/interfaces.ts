@@ -30,6 +30,10 @@ export interface IAMQPConfig {
   };
 }
 
+export interface IHealthConfig {
+  port: number;
+}
+
 export interface IOpenFaaSInvokeResult {
   contentType: string;
   data: any;

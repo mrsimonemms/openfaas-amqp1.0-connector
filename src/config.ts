@@ -39,6 +39,9 @@ export default {
       sendReply: process.env.AMQP_RESPONSE_SEND_REPLY !== 'false',
     },
   },
+  health: {
+    port: Number(process.env.HEALTH_PORT ?? 3000),
+  },
   openfaas: {
     async: process.env.OPENFAAS_ASYNC === 'true',
     callbackUrl: process.env.OPENFAAS_CALLBACK_URL,
