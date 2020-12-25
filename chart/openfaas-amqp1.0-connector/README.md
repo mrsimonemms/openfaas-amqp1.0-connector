@@ -13,7 +13,7 @@ helm upgrade \
   --install \
   --wait \
   --namespace openfaas \
-  amqp-connector charts/amqp-connector
+  amqp-connector chart/openfaas-amqp1.0-connector
 ```
 
 You can watch the Connector logs to see it invoke your functions:

@@ -25,7 +25,9 @@
       "assets": [
         "CHANGELOG",
         "package.json",
-        "package-lock.json"
+        "package-lock.json",
+        "chart/openfaas-amqp1.0-connector/Chart.yaml",
+        "chart/openfaas-amqp1.0-connector/values.yaml"
       ],
       "message": "chore(release): ${nextRelease.version} [CI SKIP]"
     }

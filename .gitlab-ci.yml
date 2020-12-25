@@ -32,7 +32,7 @@ lint:
 helm_lint:
   stage: test
   image: registry.gitlab.com/mrsimonemms/gitlab-ci-tasks/kubectl-helm
-  script: helm lint ./charts/amqp-connector
+  script: helm lint ./chart/openfaas-amqp1.0-connector
 
 #############
 # Pre-build #
