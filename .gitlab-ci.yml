@@ -120,3 +120,29 @@ docker_publish_feature:
 ###########
 update_version:
   extends: .chart_repo_update
+
+##########
+# Deploy #
+##########
+publish_helm_chart:
+  stage: deploy
+  image: alpine
+  before_script:
+    - apk add --no-cache curl
+    - export VERSION=$(cat VERSION)
+    - echo $VERSION
+  script: |
+    if [ -s VERSION ]
+    then
+      curl -f -X POST \
+        -F token=${HELM_REPO_TRIGGER_TOKEN} \
+        -F ref=master \
+        -F variables[PROJECT_OWNER]=${CI_PROJECT_NAMESPACE} \
+        -F variables[PROJECT_CHART_REPO]=${CI_PROJECT_NAME} \
+        -F variables[TAG_NAME]=v${VERSION} \
+        -F variables[CHART_DIR]=chart \
+        -F variables[CHART_NAME]=openfaas-amqp1.0-connector \
+        https://gitlab.com/api/v4/projects/${HELM_REPO_PROJECT_ID}/trigger/pipeline
+    else
+      echo "No version to publish"
+    fi
