@@ -3,8 +3,8 @@
 ## Installation
 
 ```shell
-git clone https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector.git
-cd openfaas-amqp1.0-connector
+helm repo add simonemms https://helm.simonemms.com
+helm repo update
 
 helm upgrade \
   --atomic \
@@ -13,7 +13,8 @@ helm upgrade \
   --install \
   --wait \
   --namespace openfaas \
-  amqp-connector chart/openfaas-amqp1.0-connector
+  amqp-connector \
+  simonemms/openfaas-amqp1-0-connector
 ```
 
 You can watch the Connector logs to see it invoke your functions:
