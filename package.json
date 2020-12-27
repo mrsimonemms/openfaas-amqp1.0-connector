@@ -1,6 +1,6 @@
 {
   "name": "openfaas-amqp1.0-connector",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "An OpenFaaS connector for working with AMQP 1.0",
   "main": "./dist/app",
   "scripts": {
