@@ -23,7 +23,7 @@ export default (config: IHealthConfig, logger: Logger, amqp: IAMQP) => {
     }));
     const isHealthy = services.every((item) => item.isHealthy);
 
-    logger.info({ isHealthy, status }, 'Check health of AMQP service');
+    logger.debug({ isHealthy, status }, 'Check health of AMQP service');
 
     if (!isHealthy) {
       res.status(503);
