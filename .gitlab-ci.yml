@@ -127,6 +127,11 @@ update_version:
 publish_helm_chart:
   stage: deploy
   image: alpine
+  only:
+    refs:
+      - master
+      - develop
+      - tags
   before_script:
     - apk add --no-cache curl
     - export VERSION=$(cat VERSION)
