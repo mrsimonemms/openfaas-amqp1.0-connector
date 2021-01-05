@@ -1,3 +1,10 @@
+## [1.0.1](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/compare/v1.0.0...v1.0.1) (2021-01-05)
+
+
+### Bug Fixes
+
+* **health:** change log level for healthcheck ([f5cc697](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/commit/f5cc697d7ecfd74d1a3d8f1cf8eb0aa671652f9d))
+
 # 1.0.0 (2020-12-27)
 
 

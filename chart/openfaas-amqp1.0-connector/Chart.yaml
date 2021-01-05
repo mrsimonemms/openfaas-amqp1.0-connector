@@ -2,8 +2,8 @@ apiVersion: v2
 name: openfaas-amqp1-0-connector
 description: Connect OpenFaaS functions to AMQP 1.0
 type: application
-version: 1.0.0
-appVersion: 1.0.0
+version: 1.0.1
+appVersion: 1.0.1
 icon: https://raw.githubusercontent.com/openfaas/media/master/OpenFaaS_logo_stacked_opaque.png
 home: https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector
 maintainers:
