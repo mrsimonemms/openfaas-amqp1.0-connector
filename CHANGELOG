@@ -1,3 +1,10 @@
+# [1.1.0](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/compare/v1.0.1...v1.1.0) (2021-01-15)
+
+
+### Features
+
+* **throttling:** add receiverFlow options to control how quickly incoming messages are processed ([64afc17](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/commit/64afc173bbdab09e6ecec06d4fbdb2eb1d997680))
+
 ## [1.0.1](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/compare/v1.0.0...v1.0.1) (2021-01-05)
 
 
