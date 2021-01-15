@@ -31,6 +31,9 @@ Configuration is achieved via environment variables:
 | AMQP_RECONNECT_LIMIT | Number of times to attempt reconnection | `1` |
 | AMQP_RESPONSE_REPLY_QUEUE | The name of the queue to publish replies to | `${AMQP_QUEUE_NAME}_reply` |
 | AMQP_RESPONSE_SEND_REPLY | Should replies be sent | `true` |
+| AMQP_RECEIVER_FLOW_MANUAL | Should the receiver flow be manually controlled | `false` |
+| AMQP_RECEIVER_FLOW_CONCURRENCY | The maximum number of items that can be processed at once. Will be ignored if `AMQP_RECEIVER_FLOW_MANUAL` if `false` | `500` |
+| AMQP_RECEIVER_FLOW_POST_PROCESS_PAUSE | Pause after each item is processed. In milliseconds. | `0` |
 | AMQP_TRANSPORT | Transport method - can be `tls`, `ssl` or `tcp` | `undefined` |
 | AMQP_USERNAME | Username for the AMQP server | `undefined` |
 | HEALTH_PORT | Port to run health checks on | `3000` |

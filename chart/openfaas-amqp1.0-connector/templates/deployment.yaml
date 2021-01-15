@@ -87,6 +87,12 @@ spec:
               value: {{ .Values.amqp.response.replyQueue }}
             - name: AMQP_RESPONSE_SEND_REPLY
               value: {{ .Values.amqp.response.sendReply | quote }}
+            - name: AMQP_RECEIVER_FLOW_MANUAL
+              value: {{ .Values.amqp.receiverFlow.manual | quote }}
+            - name: AMQP_RECEIVER_FLOW_CONCURRENCY
+              value: {{ .Values.amqp.receiverFlow.concurrentItems | quote }}
+            - name: AMQP_RECEIVER_FLOW_POST_PROCESS_PAUSE
+              value: {{ .Values.amqp.receiverFlow.postProcessPause | quote }}
             - name: HEALTH_PORT
               value: {{ .Values.health.port | quote }}
             - name: OPENFAAS_ASYNC

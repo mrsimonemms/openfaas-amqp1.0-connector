@@ -44,6 +44,9 @@ Configure via `values.yaml`.
 | `amqp.receiver.source` | The name of the queue to subscribe to | `openfaas` |
 | `amqp.response.replyQueue` | The name of the queue to publish replies to | `openfaas_reply` |
 | `amqp.response.sendReply` | Should replies be sent | `true` |
+| `amqp.receiverFlow.manual` | Should the receiver flow be manually controlled | `false` |
+| `amqp.receiverFlow.concurrentItems` | The maximum number of items that can be processed at once. Will be ignored if `amqp.receiverFlow.manual` if `false` | `500` |
+| `amqp.receiverFlow.postProcessPause` | Pause after each item is processed. In milliseconds. | `0` |
 | `openfaas.async` | The function is asynchronous - this will prevent replies being sent to a queue | `false` |
 | `openfaas.callbackUrl` | The callback URL to send to an asynchronous function | `<nil>` |
 | `openfaas.existingPasswordSecret` | Use existing secret with the OpenFaaS credentials (must contain a value for `password` key) | `<nil>` |

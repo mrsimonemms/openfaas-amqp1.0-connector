@@ -8,6 +8,7 @@
 import { ConnectionOptions, ReceiverOptions } from 'rhea/typings/connection';
 
 /* Files */
+import { IReceiverFlow } from './interfaces';
 
 const queueName = process.env.AMQP_QUEUE_NAME ?? 'openfaas';
 
@@ -34,6 +35,11 @@ export default {
       autoaccept: process.env.AMQP_RECEIVER_AUTO_ACCEPT === 'true', // Default to "false"
       source: queueName,
     } as ReceiverOptions,
+    receiverFlow: {
+      auto: process.env.AMQP_RECEIVER_FLOW_MANUAL !== 'true',
+      concurrentItems: Number(process.env.AMQP_RECEIVER_FLOW_CONCURRENCY ?? 500), // Use same defaults as Rhea
+      postProcessPause: Number(process.env.AMQP_RECEIVER_FLOW_POST_PROCESS_PAUSE ?? 0),
+    } as IReceiverFlow,
     response: {
       replyQueue: process.env.AMQP_RESPONSE_REPLY_QUEUE ?? `${queueName}_reply`,
       sendReply: process.env.AMQP_RESPONSE_SEND_REPLY !== 'false',
