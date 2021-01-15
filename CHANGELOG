@@ -1,3 +1,10 @@
+## [1.1.1](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/compare/v1.1.0...v1.1.1) (2021-01-15)
+
+
+### Bug Fixes
+
+* **health:** force the sender to be healthy if sendReply is disabled ([a518ebb](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/commit/a518ebb7e42b25b0bd4cc06537e28d05d206c580))
+
 # [1.1.0](https://gitlab.com/MrSimonEmms/openfaas-amqp1.0-connector/compare/v1.0.1...v1.1.0) (2021-01-15)
 
 
