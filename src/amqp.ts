@@ -7,6 +7,7 @@
 /* Third-party modules */
 import { Container, create_container, EventContext, Message } from 'rhea';
 import { Logger } from 'pino';
+import { ReceiverOptions } from 'rhea/typings/connection';
 
 /* Files */
 import { IAMQP, IAMQPConfig, IAMQPHealth, IOpenFaaS } from './interfaces';
@@ -27,6 +28,30 @@ export default class AMQP implements IAMQP {
 
     this.configureListeners();
     this.startListening();
+  }
+
+  addCredit(ctx) {
+    if (this.config.receiverFlow.auto) {
+      this.logger.debug('Receiver flow is automatic');
+      return;
+    }
+
+    this.logger.info('Incrementing credit');
+
+    const maxConcurrency = this.config.receiverFlow.concurrentItems;
+    const availableCredit = ctx.receiver.credit;
+    const creditToAdd = maxConcurrency - availableCredit;
+
+    this.logger.info(
+      {
+        maxConcurrency,
+        availableCredit,
+        creditToAdd,
+      },
+      'Adding credit to message queue listener',
+    );
+
+    ctx.receiver.add_credit(creditToAdd);
   }
 
   connectionStatus(): IAMQPHealth {
@@ -66,10 +91,12 @@ export default class AMQP implements IAMQP {
       .on('protocol_error', (ctx) => {
         this.logger.error({ ctx }, 'Protocol error');
       })
-      .on('receiver_open', () => {
+      .on('receiver_open', (ctx) => {
         this.logger.info('Receiver open');
 
         this.connectionHealth.receiver = true;
+
+        this.addCredit(ctx);
       })
       .on('receiver_close', () => {
         this.logger.debug('Receiver closed');
@@ -149,23 +176,43 @@ export default class AMQP implements IAMQP {
         logger.error('Exceeded delivery attempts - rejecting');
 
         ctx.delivery.reject();
-        return;
+      } else {
+        ctx.delivery.release({
+          delivery_failed: true,
+          message_annotations: {
+            error: err.message,
+          },
+        });
+
+        logger.info('Message released');
       }
-
-      ctx.delivery.release({
-        delivery_failed: true,
-        message_annotations: {
-          error: err.message,
-        },
-      });
-
-      logger.info('Message released');
     }
+
+    const { postProcessPause } = this.config.receiverFlow;
+
+    if (postProcessPause > 0) {
+      this.logger.info({ postProcessPause }, 'Pausing after message processed');
+
+      await new Promise((resolve) => setTimeout(resolve, postProcessPause));
+    }
+
+    this.addCredit(ctx);
   }
 
   private startListening(): void {
     const connection = this.container.connect(this.config.connection);
-    connection.open_receiver(this.config.receiver);
+    const receiverConfig: ReceiverOptions = {
+      autoaccept: this.config.receiver.autoaccept,
+      source: this.config.receiver.source,
+    };
+
+    if (!this.config.receiverFlow.auto) {
+      this.logger.debug(this.config.receiverFlow, 'Manually controlling receiver flow');
+
+      receiverConfig.credit_window = 0;
+    }
+
+    connection.open_receiver(receiverConfig);
 
     if (this.config.response.sendReply) {
       this.logger.debug({ queue: this.config.response.replyQueue }, 'Reply will be sent');
@@ -191,6 +238,8 @@ export default class AMQP implements IAMQP {
         formattedMessage = messageContent;
         break;
     }
+
+    console.log(formattedMessage);
 
     return formattedMessage;
   }

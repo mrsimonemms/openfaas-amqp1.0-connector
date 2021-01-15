@@ -24,6 +24,7 @@ export interface IAMQPConfig {
     maxAttempts: number;
   };
   receiver: ReceiverOptions;
+  receiverFlow: IReceiverFlow;
   response: {
     replyQueue: string;
     sendReply: boolean;
@@ -50,4 +51,10 @@ export interface IOpenFaaSConfig {
   gateway: string;
   password?: string;
   username?: string;
+}
+
+export interface IReceiverFlow {
+  auto: boolean;
+  concurrentItems: number;
+  postProcessPause: number;
 }

@@ -28,6 +28,10 @@ amqp:
   receiver:
     autoAccept: false
     source: openfaas
+  receiverFlow:
+    manual: false
+    concurrentItems: 500
+    postProcessPause: 0
   response:
     replyQueue: openfaas_reply
     sendReply: true
