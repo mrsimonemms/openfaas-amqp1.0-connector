@@ -55,6 +55,11 @@ export default class AMQP implements IAMQP {
   }
 
   connectionStatus(): IAMQPHealth {
+    if (!this.config.response.sendReply) {
+      this.logger.trace('Send reply is disabled so forcing sender to be healthy');
+      this.connectionHealth.sender = true;
+    }
+
     return this.connectionHealth;
   }
 
